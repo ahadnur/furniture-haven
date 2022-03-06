@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import data from './data'
+import data from '../constants/data'
 
 import search from '../public/search.svg'
 import heroImage from '../public/banner2.jpg'
