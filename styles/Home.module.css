@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 0 250px;
 }
 
 .main {
@@ -106,6 +106,12 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+/* Our css */
+.currentBanner{
+  height: 600px;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
