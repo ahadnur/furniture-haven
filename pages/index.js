@@ -15,7 +15,7 @@ export default function Home() {
     <div className="xl:px-[250px] sm:px-10">
       <header className="flex justify-between items-center py-4 xl:flex-row sm:flex-row flex-col w-full">
         <div className="flex flex-start rounded-sm flex-1 mb-2">
-          <Image src={search} width={30} height={30} />
+          <Image src={search} width={30} height={30} alt="Search" />
           <input type="text" placeholder="Search..." className="py-2 placeholder:text-gray-500 outline-none ml-2 max-w-[350px] border-solid border-b-2 border-gray-500" />
         </div>
         <div className="text-2xl font-bold flex-0 mb-2">
