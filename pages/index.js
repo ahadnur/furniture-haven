@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 
 import data from '../constants/data'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 
 import heroImage from '../public/banner2.jpg'
@@ -13,10 +14,10 @@ import currentBanner from '../public/currentBanner.jpg'
 
 export default function Home() {
   return (
-    <div className="xl:px-[250px] sm:px-10 px-6">
+    <div className="">
       
       <Header />
-      <main>
+      <main className="xl:px-[250px] sm:px-10 px-6">
         <div className="hero bg-gray-300 h-60 sm:h-96 w-full overflow-hidden pointer">
           <Image 
             src={heroImage} 
@@ -96,6 +97,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

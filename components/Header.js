@@ -5,7 +5,7 @@ import search from '../public/search.svg'
 
 function Header() {
   return (
-    <div>
+    <div className="xl:px-[250px] sm:px-10 px-6">
         <header className="flex justify-between items-center py-4 xl:flex-row sm:flex-row flex-col w-full">
         <div className="flex flex-start rounded-sm flex-1 mb-2">
           <Image src={search} width={30} height={30} alt="Search" />
