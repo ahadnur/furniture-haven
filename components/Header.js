@@ -13,7 +13,7 @@ function Header() {
         </div>
         <div className="text-2xl font-bold flex-0 mb-2">
           <Link href="/">
-              <a className="">Furniture Haven</a>
+              <a className="">Furniture</a>
           </Link>
         </div>
         <div className=" text-white text-md flex justify-end flex-1">
