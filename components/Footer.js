@@ -22,12 +22,10 @@ function Footer() {
           <div className="subsc mb-6">
             <span className="text-sm uppercase text-gray-300 border-b-2 border-b-gray-300">subscriptions</span>
               <div className="mt-4 text-while flex flex-col">
-                <Link href="/">
-                  <a className="text-white">Home</a>
-                </Link>
                 <Link href="/contact">
-                  <a className="text-white">Contact</a>
+                  <a className="text-white">Subscribe Furniture Haven</a>
                 </Link>
+                
               </div>
           </div>
           <div className="follow mb-6">

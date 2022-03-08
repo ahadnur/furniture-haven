@@ -14,10 +14,12 @@ function Header() {
         <div className="text-2xl font-bold flex-0 mb-2">
           <Link href="/">
               <a className="">Furniture Haven</a>
-            </Link>
+          </Link>
         </div>
         <div className=" text-white text-md flex justify-end flex-1">
-          <button className="bg-emerald-500 py-2 px-4 rounded-md">Subscribe</button>
+          <Link href="/contact">
+            <a className="bg-emerald-500 py-2 px-4 rounded-md">Subscribe</a>  
+          </Link>
         </div>
       </header>
       <nav>
