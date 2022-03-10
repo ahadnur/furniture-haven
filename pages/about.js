@@ -31,7 +31,7 @@ function about() {
             <div className="flex flex-wrap justify-center sm:justify-start items-center sm:items-start">
             {
               data.map(item => (
-                <div className="card mr-4 mb-2">
+                <div className="card mr-4 mb-2" key={item.id}>
                   <Image
                     src={item.image}
                     alt={item.title}

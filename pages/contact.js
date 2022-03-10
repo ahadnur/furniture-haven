@@ -19,6 +19,7 @@ function Contact() {
             <div className=" md:flex-1">
               <Image
                 src={contact}
+                alt="Contact image"
               />
             </div>
           </div>
