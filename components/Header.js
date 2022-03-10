@@ -6,7 +6,7 @@ import search from '../public/search.svg'
 function Header() {
   return (
     <div className="xl:px-[250px] sm:px-10 px-6">
-        <header className="flex justify-between items-center py-4 xl:flex-row sm:flex-row flex-col w-full">
+        <header className="flex justify-between items-center py-4 xl:flex-row md:flex-row flex-col w-full">
         <div className="flex flex-start rounded-sm flex-1 mb-2">
           <Image src={search} width={30} height={30} alt="Search" />
           <input type="text" placeholder="Search..." className="py-2 placeholder:text-gray-500 outline-none ml-2 max-w-[350px] border-solid border-b-2 border-gray-500" />
@@ -30,10 +30,16 @@ function Header() {
             </Link>
           </li>
           <li className="text-lg hover:text-emerald-500 transition-all">
+            <Link href="/posts">
+              <a className="mr-6">Posts</a>
+            </Link>
+          </li>
+          <li className="text-lg hover:text-emerald-500 transition-all">
             <Link href="/about">
               <a className="mr-6">About</a>
             </Link>
           </li>
+          
           <li className="text-lg hover:text-emerald-500 transition-all">
             <Link href="/contact">
               <a>Contact</a>

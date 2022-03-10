@@ -9,10 +9,16 @@ function Footer() {
         <h2 className="text-4xl text-white mb-4 pb-10">Furniture Haven</h2>
         <div className="md:flex md:justify-between ">
           <div className="about mb-6">
-            <span className="text-sm uppercase text-gray-300 border-b-2 border-b-gray-300">about</span>
+            <span className="text-sm uppercase text-gray-300 underline underline-offset-1 decoration-emerald-500 border-b-gray-300">about</span>
             <div className="mt-4 text-while flex flex-col">
               <Link href="/">
                 <a className="text-white">Home</a>
+              </Link>
+              <Link href="/posts">
+                <a className="text-white">Posts</a>
+              </Link>
+              <Link href="/about">
+                <a className="text-white">About</a>
               </Link>
               <Link href="/contact">
                 <a className="text-white">Contact</a>
@@ -20,7 +26,7 @@ function Footer() {
             </div>
           </div>
           <div className="subsc mb-6">
-            <span className="text-sm uppercase text-gray-300 border-b-2 border-b-gray-300">subscriptions</span>
+            <span className="text-sm uppercase text-gray-300 underline underline-offset-1 decoration-emerald-500 border-b-gray-300">subscriptions</span>
               <div className="mt-4 text-while flex flex-col">
                 <Link href="/contact">
                   <a className="text-white">Subscribe Furniture Haven</a>
@@ -29,7 +35,7 @@ function Footer() {
               </div>
           </div>
           <div className="follow mb-6">
-            <span className="text-sm uppercase text-gray-300 border-b-2 border-b-gray-300">follow</span>
+            <span className="text-sm uppercase text-gray-300 underline underline-offset-1 decoration-emerald-500 border-b-gray-300">follow</span>
               <div className="mt-4 text-while flex flex-col">
                 <Link href="#">
                   <a className="text-white">@furnitureHaven on Instagram</a>

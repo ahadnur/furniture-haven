@@ -1,4 +1,4 @@
-module.exports = [
+const data = [
     {
         "id": 1,
         "title": "Before & After: “Patience and Perseverance” Save a Rundown Eichler Home With a Major Mold Problem",
@@ -54,3 +54,31 @@ module.exports = [
         "tag": ["latest", 'current']
     },
 ];
+
+export default data;
+
+export function getAllPost(){
+    return data;
+}
+
+export function getAllPostId(){
+    return getAllPost().map(post => {
+        return {
+            params: {
+                id: post.id
+            }
+        }
+    });
+}
+
+export function getPostById(id) {
+    let post = null;
+
+    getAllPost().map(p => {
+        if (p.id == id){
+            post = p
+            return
+        }
+    });
+    return post
+}
