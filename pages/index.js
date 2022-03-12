@@ -1,7 +1,8 @@
 import Head from 'next/head'
 
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+
+
 
 import data from '../constants/data'
 import Header from '../components/Header'
@@ -11,6 +12,7 @@ import Footer from '../components/Footer'
 import heroImage from '../public/banner2.jpg'
 import heroImage2 from '../public/banner.jpg'
 import currentBanner from '../public/currentBanner.jpg'
+
 
 export default function Home() {
   return (

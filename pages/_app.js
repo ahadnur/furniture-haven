@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/style.css'
 import SEO from '@bradgarropy/next-seo'
 
 function MyApp({ Component, pageProps }) {
