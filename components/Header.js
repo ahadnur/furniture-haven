@@ -77,7 +77,7 @@ function Header() {
       </nav>
       <div className="bg-emerald-500 py-2 mb-2">
         <marquee width="100%" direction="left" scrollamount="10" className="text-white text-md">
-          Big Sale offer.. Subscribe to get 10% off. Hurry up! 
+        🔥🔥🔥🔥 Big Sale offer.. Subscribe to get 10% off. Hurry up! 🔥🔥🔥🔥
         </marquee>
       </div>
     </div>
