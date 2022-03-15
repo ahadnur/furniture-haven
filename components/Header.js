@@ -7,7 +7,6 @@ import { InstantSearch, SearchBox, Hits, Configure, Highlight } from 'react-inst
 
 function Header() {
   const [clicked, setClicked] = useState(false)
-
   const showHits = () => {
     setClicked(true)
   }
@@ -29,7 +28,7 @@ function Header() {
     <div className="xl:px-[250px] sm:px-10 px-6">
         <header className="flex justify-between items-center py-4 xl:flex-row md:flex-row flex-col w-full">
         <div className="flex flex-start rounded-sm flex-1 mb-2 flex-grow">
-          {/* <Image src={search} width={30} height={30} alt="Search" /> */}
+          {/* Algolia Search */}
           <InstantSearch
             indexName="furnitureHaven"
             searchClient={searchClient}
@@ -76,6 +75,11 @@ function Header() {
           </li>
         </ul>
       </nav>
+      <div className="bg-emerald-500 py-2 mb-2">
+        <marquee width="100%" direction="left" scrollamount="10" className="text-white text-md">
+          Big Sale offer.. Subscribe to get 10% off. Hurry up! 
+        </marquee>
+      </div>
     </div>
   )
 }
