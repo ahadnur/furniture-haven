@@ -1,7 +1,7 @@
 const data = [
     {
         "id": 1,
-        "title": "here is another one",
+        "title": "This title is comind from SANITY",
         "subtitle": "Some things were beyond salvaging, but a renovation by interior designer Diona Polito worked to honor the history of the house.",
         "content": "Dicta aut earum omnis aliquam itaque. Sequi consectetur molestiae rerum corporis. Nihil officiis facilis aspernatur libero alias aut. Accusamus officia voluptate aliquid cum aspernatur. Ut consequatur distinctio nihil nesciunt totam excepturi corporis. Eveniet facere ex voluptatum sint dicta perferendis.",
         "image": "/gallery/1.jpg",

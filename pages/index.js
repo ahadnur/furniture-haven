@@ -1,10 +1,12 @@
+import React, { useState, useEffect } from "react";
 import Head from 'next/head'
-
+import Link from 'next/link'
 import Image from 'next/image'
+import { groq } from "next-sanity"
 
+import {sanityClient, urlFor} from '../sanity'
+import imageUrlBuilder from '@sanity/image-url'
 
-
-import data from '../constants/data'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -14,7 +16,27 @@ import heroImage2 from '../public/banner.jpg'
 import currentBanner from '../public/currentBanner.jpg'
 
 
-export default function Home() {
+
+export default function Home({ posts }) {
+  const [mappedPosts, setMappedPosts] = useState([])
+  useEffect(() => {
+    if (posts.length) {
+      const imageBuilder = imageUrlBuilder(sanityClient)
+
+      setMappedPosts(
+        posts.map(post => {
+          return {
+            ...post,
+            mainImage: imageBuilder.image(post.mainImage).url(),
+          }
+        })
+      )
+    } else {
+      setMappedPosts([])
+    }
+  }, [posts])
+
+
   return (
     <div className="">
       
@@ -41,24 +63,30 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-12">
-              {
-                data.map((d, id) => (
-                  <div className="image flex flex-col sm:flex-row mb-4" key={id}>
+              {mappedPosts.map((post) => {
+                // console.log(post.slug.current)
+                return(
+                  <div className="image flex flex-col items-center sm:flex-row mb-4" key={post._id}>
+                    <div className="">
                     <Image
-                      src={d.image}
+                      src={post.mainImage}
                       alt="Content Image"
-                      height={200}
-                      width={300}
+                      layout={'fixed'}
+                      height={'200px'}
+                      width={'300px'}
                       objectFit="cover"
                     />
+                    </div>
                     <div className="text sm:ml-4">
-                      <h2 className="text-2xl font-bold mb-2 max-w-4xl hover:opacity-75 cursor-pointer">{d.title}</h2>
-                      <p>{d.subtitle}</p>
-                      <span className="text-xs text-emerald-600">By - {d.author}</span>
+                      <Link href={`/posts/${post.slug.current}`}>
+                        <h2 className="text-2xl font-bold mb-2 max-w-4xl hover:opacity-75 cursor-pointer">{post.title}</h2>
+                      </Link>
+                      <p>{post.exerpt}</p>
+                      <span className="text-xs text-emerald-600">By - {post.author.name}</span>
                     </div>
                   </div>
-                ))
-              }
+                )
+              })}
             </div>
           </div>
           <div className="rightSide w-full md:w-1/3 md:ml-8">
@@ -74,24 +102,23 @@ export default function Home() {
 
               <div className="currentCard mt-8 ">
                 {
-                  data.map((d, id) => {
-                    if(d.tag.includes('current')) {
-                      return (
-                        <div className="flex items-center md:flex-row md:items-center mb-4" key={id}>
-                          <div className="text mr-4 sm:mr-0 w-3/4">
+                  mappedPosts.filter(p => p.categories.map(q=> q.title).includes("Current")).map((d) => {
+                    return (
+                      <div className="flex items-center md:flex-row md:items-center mb-4" key={d._id}>
+                        <div className="text mr-4 sm:mr-0 w-3/4">
+                          <Link href={`/posts/${d.slug.current}`}>
                             <h3 className="text-sm md:text-md font-bold mb-2 max-w-4xl hover:opacity-75 cursor-pointer">{d.title}</h3>
-                          </div>
-                          <Image
-                            src={d.image}
-                            alt="Content Image"
-                            height={150}
-                            width={250}
-                            objectFit="cover"
-                          />
+                          </Link>
                         </div>
-                      )
-                    }
-                    
+                        <Image
+                          src={d.mainImage}
+                          alt="Content Image"
+                          height={150}
+                          width={250}
+                          objectFit="cover"
+                        />
+                      </div>
+                    )
                   })
                 }
               </div>
@@ -102,4 +129,39 @@ export default function Home() {
       <Footer />
     </div>
   )
+}
+
+const query = groq`
+  *[_type == "post"] {
+    ...,
+    author->,
+    categories->
+  }
+`;
+
+export const getServerSideProps = async () => {
+  const query = `
+  *[_type == "post"  ] {
+    _id,
+    title,
+    exerpt,
+    slug,
+    mainImage,
+    body,
+    categories[]->{
+      title
+    },
+    author -> {
+      name
+    }
+  }
+  `
+  const posts = await sanityClient.fetch(query)
+
+    
+  return {
+    props : {
+      posts
+    }
+  }
 }
