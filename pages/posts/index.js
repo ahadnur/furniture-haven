@@ -5,14 +5,12 @@ import Link from 'next/link'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
-import { groq } from "next-sanity"
-
 import {sanityClient, urlFor} from '../../sanity'
 import imageUrlBuilder from '@sanity/image-url'
 
 
 
-export default function index({posts}) {
+export default function Index({posts}) {
     const [mappedPosts, setMappedPosts] = useState([])
     useEffect(() => {
         if (posts.length) {
