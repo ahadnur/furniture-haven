@@ -15,45 +15,69 @@ function urlFor(source){
   return builder.image(source)
 }
 
-
-export async function getStaticPaths(){
-  const posts = await sanityClient.fetch(`*[_type == "post"]{
-    slug
-  }`)
-  const paths = posts.map((post) =>({
-    params: {
-      slug: post.slug.current
-    }
-  }))
+// SERVER SIDE PROPS
+export async function getServerSideProps(context) {
+  const { slug } = context.query
+  const post = await sanityClient.fetch(
+    `*[_type == "post" && slug.current == $slug][0]{
+      title,
+      slug,
+      exerpt,
+      mainImage{
+        asset->{
+          _id,
+          url
+        }
+      },
+      "author": author->name,
+      "authorImage": author->image,
+      description
+    }`,{slug})
+  // console.log(post)
   return {
-    paths,
-    fallback: false
+    props: {
+      post
+    }
   }
 }
+// export async function getStaticPaths(){
+//   const posts = await sanityClient.fetch(`*[_type == "post"]{
+//     slug
+//   }`)
+//   const paths = posts.map((post) =>({
+//     params: {
+//       slug: post.slug.current
+//     }
+//   }))
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps({params, preview=false}) {
-  const slug = params.slug
-  const post = await sanityClient.fetch(`*[_type == "post" && slug.current == '${slug}']{
-    title,
-    slug,
-    exerpt,
-    mainImage{
-      asset->{
-        _id,
-        url
-      }
-    },
-    "author": author->name,
-    "authorImage": author->image,
-    description
-  }`, {slug:params.slug})
-  return{
-    props: post[0]
-  }
-}
+// export async function getStaticProps({params, preview=false}) {
+//   const slug = params.slug
+//   const post = await sanityClient.fetch(`*[_type == "post" && slug.current == '${slug}']{
+//     title,
+//     slug,
+//     exerpt,
+//     mainImage{
+//       asset->{
+//         _id,
+//         url
+//       }
+//     },
+//     "author": author->name,
+//     "authorImage": author->image,
+//     description
+//   }`, {slug:params.slug})
+//   return{
+//     props: post[0]
+//   }
+// }
 
 export default function Details(props) {
-  console.log("From details page", props.title)
+  console.log("From details page", props.post.author)
   
   return (
     <div>
@@ -61,7 +85,7 @@ export default function Details(props) {
       <main className="xl:px-[250px] sm:px-10 px-6">
             <div className="flex justify-center items-center">
               <Image
-                src={urlFor(props.mainImage.asset._id).width(600).url()}
+                src={urlFor(props.post.mainImage).width(600).url()}
                 alt={props.title}
                 width={1000}
                 height={600}
@@ -70,11 +94,11 @@ export default function Details(props) {
               />
             </div>
             <div className="max-w-[1000px] m-auto">
-              <p className="mt-10">Posted By <span className="text-emerald-500 text-bold">{props.author}</span></p>
-              <h2 className="font-bold text-md md:text-2xl my-4">{props.title}</h2>
-              <h4 className="font-semibold text-sm md:text-xl pb-4">{props.exerpt}</h4>
+              <p className="mt-10">Posted By <span className="text-emerald-500 text-bold">{props.post.author}</span></p>
+              <h2 className="font-bold text-md md:text-2xl my-4">{props.post.title}</h2>
+              <h4 className="font-semibold text-sm md:text-xl pb-4">{props.post.exerpt}</h4>
               <div className="text-sm md:text-md lg:text-lg text-gray-700 mb-8 w-full lg:w-2/3">
-                <BlockContent blocks={props.description} />
+                <BlockContent blocks={props.post.description} />
               </div>
             </div>
             <div>
