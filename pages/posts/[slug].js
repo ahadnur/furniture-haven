@@ -6,45 +6,54 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
 
-import {sanityClient, urlFor} from '../../sanity'
+import {sanityClient} from '../../sanity'
 import imageUrlBuilder from '@sanity/image-url'
 import BlockContent from '@sanity/block-content-to-react'
 
-
-
-export const getServerSideProps = async (context) => {
-  const pageSlug = context.params.slug
-  // console.log(pageSlug)
-
-  if (!pageSlug) {
-    return {
-      notFound: true
-    }
-  };
-  const query = `
-    *[ _type == "post" && slug.current == "${pageSlug}" ]
-  `
-  const post = await sanityClient.fetch(query)
-  // console.log(post)
-
-  if (!post){
-    return {
-      notFound: true
-    }
-  } else {
-    return {
-      props: {
-        post: post[0]
-      }
-    }
-  }
+const builder = imageUrlBuilder(sanityClient)
+function urlFor(source){
+  return builder.image(source)
 }
 
 
+export async function getStaticPaths(){
+  const posts = await sanityClient.fetch(`*[_type == "post"]{
+    slug
+  }`)
+  const paths = posts.map((post) =>({
+    params: {
+      slug: post.slug.current
+    }
+  }))
+  return {
+    paths,
+    fallback: false
+  }
+}
 
-export default function Details({post}) {
-  
-  const { _id, title, exerpt, body, author, mainImage } = post
+export async function getStaticProps({params, preview=false}) {
+  const slug = params.slug
+  const post = await sanityClient.fetch(`*[_type == "post" && slug.current == '${slug}']{
+    title,
+    slug,
+    exerpt,
+    mainImage{
+      asset->{
+        _id,
+        url
+      }
+    },
+    "author": author->name,
+    "authorImage": author->image,
+    description
+  }`, {slug:params.slug})
+  return{
+    props: post[0]
+  }
+}
+
+export default function Details(props) {
+  console.log("From details page", props.title)
   
   return (
     <div>
@@ -52,8 +61,8 @@ export default function Details({post}) {
       <main className="xl:px-[250px] sm:px-10 px-6">
             <div className="flex justify-center items-center">
               <Image
-                src={imageUrlBuilder(sanityClient).image(mainImage).url()}
-                alt={title}
+                src={urlFor(props.mainImage.asset._id).width(600).url()}
+                alt={props.title}
                 width={1000}
                 height={600}
                 objectFit="cover"
@@ -61,13 +70,15 @@ export default function Details({post}) {
               />
             </div>
             <div className="max-w-[1000px] m-auto">
-              <h2 className="font-bold text-md md:text-2xl my-4">{title}</h2>
-              <h4 className="font-semibold text-sm md:text-xl pb-4">{exerpt}</h4>
-              <div className="text-sm md:text-md text-gray-700 mb-8">
-                <BlockContent blocks={body} />
+              <p className="mt-10">Posted By <span className="text-emerald-500 text-bold">{props.author}</span></p>
+              <h2 className="font-bold text-md md:text-2xl my-4">{props.title}</h2>
+              <h4 className="font-semibold text-sm md:text-xl pb-4">{props.exerpt}</h4>
+              <div className="text-sm md:text-md lg:text-lg text-gray-700 mb-8 w-full lg:w-2/3">
+                <BlockContent blocks={props.description} />
               </div>
             </div>
-
+            <div>
+            </div>
             <div className="max-w-[1000px] m-auto mt-20">
               <Link href="/posts">
                 <a className="text-md bg-emerald-100 text-emerald-500 py-2 px-8 border-[1px]">&#8592; Back to Posts</a>
@@ -79,5 +90,3 @@ export default function Details({post}) {
     </div>
   )
 }
-
-
