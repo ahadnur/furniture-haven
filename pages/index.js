@@ -15,7 +15,7 @@ import heroImage from '../public/banner2.jpg'
 import heroImage2 from '../public/banner.jpg'
 import currentBanner from '../public/currentBanner.jpg'
 
-
+// this comment is for the branching
 
 export default function Home({ posts }) {
   const [mappedPosts, setMappedPosts] = useState([])
